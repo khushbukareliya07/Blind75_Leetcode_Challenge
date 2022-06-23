@@ -4,7 +4,7 @@ class 155_MinStack {
     Stack<Integer> data_stack, min_stack;
     int min;
     
-    public MinStack() 
+    public 155_MinStack() 
     {
         data_stack = new Stack<>();    
         min = Integer.MAX_VALUE;
