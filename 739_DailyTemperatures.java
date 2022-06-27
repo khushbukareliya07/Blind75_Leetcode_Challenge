@@ -1,4 +1,4 @@
-//Brute-Force approach
+//Optiized Approach
 
 class 739_DailyTemperatures {
     
