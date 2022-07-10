@@ -1,3 +1,4 @@
+
 class 707_DesignLinkedList {
 
     public class Node
@@ -11,102 +12,89 @@ class 707_DesignLinkedList {
         }
     }
     
-    Node head, tail;
+    Node head;
     int size;
     
-    public MyLinkedList() {
-     head =  new Node(-1);
-     tail = new Node(-1);
-        size =0;
+    public 707_DesignLinkedList() {
+     head =  null;
+     size =0;
     }
     
     public int get(int index) {
-        if(index > size -1 || index <0)
-            return -1;
-        
-        //traverse through the list till index-1 position
-        Node curr =  traverseThroughLL(head, index-1);
-        return curr.next.val;
+        Node node = FindNodeAtGivenIndex(index);
+        return node == null? -1 : node.val;
     }
-    
+   
     public void addAtHead(int val) {
+        addAtIndex(0, val);
         
-        Node newNode = new Node(val);
-        
-        if(head.val == -1)
-        {
-            head.next = newNode;
-            tail = head.next;
-            
-        }
-        else
-        {
-            Node temp = head.next;
-            head.next = newNode;
-            newNode.next = temp.next;
-        }
-        size++;
     }
+  
     
     public void addAtTail(int val) {
-        
-        Node newNode = new Node(val);
-        
-        if(tail.val == -1 && tail.next == null)
-        {
-            head.next = newNode;
-            tail = head.next;
-        }
-        else
-        {
-            tail.next = newNode;
-            tail = newNode;
-        }
-        size++;
-        
+        addAtIndex(size, val);
     }
     
     public void addAtIndex(int index, int val) {
         
-        if(index > size -1 || index <0)
-            return;
+        if(index > size)
+            return ;
         
-        Node newNode = new Node(val);
-        //traverse through the list till index-1 position
-        Node prev =  traverseThroughLL(head, index-1);
-        Node temp = prev;
+        Node node = new Node(val);
+        Node curr = FindNodeAtGivenIndex(index-1);
         
-        prev.next =  newNode;
-        newNode.next = temp.next;
-        size++;
-    }
-    
-    public void deleteAtIndex(int index) {
-    
-        if(index > size -1 || index <0)
-            return;
+        if(index == 0)
+        {
+         node.next = head;
+         head = node;
+        }
         
-       
-        //traverse through the list till index-1 position
-        Node prev =  traverseThroughLL(head, index-1);  
-         if(index== size -1)
-         {
-            tail = prev;
-             size--;
-         }
+        else if(curr == null)
+        {
+            head = node;
+        }
         else
         {
-            prev.next = prev.next.next;
-            size--;
+            node.next = curr.next;
+            curr.next = node;
         }
+        size++;
+        
+    }
+
+    
+    public void deleteAtIndex(int index) {
+        if(size == 0 || index > size-1 || index <0)
+            return;
+        
+        if(index ==0)
+            head = head.next;
+        
+        else
+        {
+            Node curr = FindNodeAtGivenIndex(index-1);
+            if(curr.next !=null)
+            {
+                curr.next = curr.next.next;
+            }
+            
+        }
+        size--;
+        
        
     }
     
-    public Node traverseThroughLL(Node head, int index)
+    public Node FindNodeAtGivenIndex(int index)
     {
-        Node curr = head;
+        if(index<=0)
+            return head;
         
-        int count =0;
+        if(size ==0 || index > size -1)
+            return null;
+        
+        Node curr = head.next;
+        
+        int count = 1;
         while(count < index)
         {
             curr = curr.next;
@@ -115,6 +103,12 @@ class 707_DesignLinkedList {
         return curr;
     }
 }
+
+    
+    
+  
+
+   
 
 /**
  * Your MyLinkedList object will be instantiated and called as such:
